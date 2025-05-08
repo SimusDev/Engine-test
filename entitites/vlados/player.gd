@@ -47,6 +47,9 @@ func _ready() -> void:
 	EventBus.on_player_spawned.emit(self)
 
 func _physics_process(delta: float) -> void:
+	var is_pipi = Input.is_action_pressed("pipi") and is_playable()
+	$pipi.visible = is_pipi
+	$mo4a.emitting = is_pipi
 	
 	var is_sprinting: bool = _character_sync.get_synced_data().get("is_sprinting", character_component.is_sprinting)
 	var _veloctiy: Vector3 = character_component.get_velocity()
@@ -56,9 +59,13 @@ func _physics_process(delta: float) -> void:
 	
 	if move_dir:
 		animation_to_play = "walk"
-		if is_sprinting:
-			animation_to_play = "run"
 		
+		if is_sprinting: _animation_player.speed_scale = 2 
+		else:
+			_animation_player.speed_scale = 1
+	else:
+		_animation_player.speed_scale = 1
+		animation_to_play = "idle"
 
 	_animation_player.play(animation_to_play)
 

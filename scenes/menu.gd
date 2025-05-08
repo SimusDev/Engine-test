@@ -16,4 +16,4 @@ func _on_button_client_pressed() -> void:
 func start_game() -> void:
 	$VBoxContainer/button_host.disabled = false
 	$VBoxContainer/button_client.disabled = false
-	Maps.change_map_to(Maps.get_map_by_code("test_map"))
+	Maps.change_map_to(Maps.get_map_by_code("parkur"))

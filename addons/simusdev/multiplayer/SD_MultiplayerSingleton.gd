@@ -291,5 +291,3 @@ func _recieve_data_from_db_rpc(data: Dictionary) -> void:
 		var callable: Callable = Callable(object, method_name)
 		if callable:
 			callable.call(db_data)
-
-	
