@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://n0bygt0dmsqd"]
+
+[ext_resource type="PackedScene" uid="uid://d1kk0gwac7610" path="res://interface/health/health_interface.tscn" id="1_kod26"]
+[ext_resource type="PackedScene" uid="uid://ddd0epmcwelof" path="res://interface/chat/chat_interface.tscn" id="2_gner0"]
+
+[node name="GameInterface" type="Node"]
+
+[node name="health_interface" parent="." instance=ExtResource("1_kod26")]
+
+[node name="chat_interface" parent="." instance=ExtResource("2_gner0")]

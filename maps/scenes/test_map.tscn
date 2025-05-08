@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://b4kkhkjrd0ek5"]
+
+[ext_resource type="Texture2D" uid="uid://deuogt1h1bof8" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_urvl1"]
+[ext_resource type="PackedScene" uid="uid://doapi15bhvboh" path="res://prefabs/player_spawner.tscn" id="3_c3pkw"]
+[ext_resource type="PackedScene" uid="uid://doxlh5c0gc0eo" path="res://entitites/explosive/explosive.tscn" id="4_dprsy"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c3pkw"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_d6q2c"]
+sky_material = SubResource("ProceduralSkyMaterial_c3pkw")
+
+[sub_resource type="Environment" id="Environment_p5exx"]
+background_mode = 2
+sky = SubResource("Sky_d6q2c")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ers5l"]
+albedo_texture = ExtResource("1_urvl1")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_c3pkw"]
+material = SubResource("StandardMaterial3D_ers5l")
+size = Vector3(25, 1, 26)
+
+[node name="map" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p5exx")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+use_collision = true
+mesh = SubResource("BoxMesh_c3pkw")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999702, -0.00197782, 0.0243283, 0, 0.996712, 0.0810297, -0.0244086, -0.0810055, 0.996415, 0.11963, 1.72595, 0.365238)
+fov = 43.6
+
+[node name="PlayerSpawner" parent="." instance=ExtResource("3_c3pkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.58462, 0)
+visible = true
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+
+[node name="Explosive" parent="." instance=ExtResource("4_dprsy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00413, -2.98052)

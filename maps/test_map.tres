@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="R_GameMap" load_steps=3 format=3 uid="uid://cjr00xf5jw77v"]
+
+[ext_resource type="Script" uid="uid://dr6n65i48b73y" path="res://scripts/resources/R_GameMap.gd" id="1_7m0i6"]
+[ext_resource type="Texture2D" uid="uid://bs27b38iwrjuf" path="res://icon.svg" id="1_vw3xx"]
+
+[resource]
+script = ExtResource("1_7m0i6")
+scene_path = "uid://b4kkhkjrd0ek5"
+code = "test_map"
+name = "TEST MAP"
+icon = ExtResource("1_vw3xx")
+description = "just test map!"
+metadata/_custom_type_script = "uid://dr6n65i48b73y"

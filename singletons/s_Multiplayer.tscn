@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://salsiodlqv3u"]
+
+[ext_resource type="Script" uid="uid://cwg1db2bx55t8" path="res://addons/simusdev/multiplayer/SD_MultiplayerSingleton.gd" id="1_4wthg"]
+[ext_resource type="Script" uid="uid://8eq74y0ry7lx" path="res://addons/simusdev/Game/SD_NodeGameSettingsSingleton.gd" id="2_84gnl"]
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_4wthg")
+metadata/_custom_type_script = "uid://cwg1db2bx55t8"
+
+[node name="SD_NodeGameSettingsSingleton" type="Node" parent="."]
+script = ExtResource("2_84gnl")
+disable_console_on_release = false
+minimize_feature = false
+metadata/_custom_type_script = "uid://8eq74y0ry7lx"
