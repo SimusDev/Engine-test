@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bal8swov8mxyr"
+path.s3tc="res://.godot/imported/mge_zov_soldier_0.jpg-a901d96ad843c0e79447596049bbf294.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "5b73ca4f42de636a520d35fe84635923"
+}
+
+[deps]
+
+source_file="res://maps/scenes/vlados_parkur_swag/3d_objects/zov4ik/mge_zov_soldier_0.jpg"
+dest_files=["res://.godot/imported/mge_zov_soldier_0.jpg-a901d96ad843c0e79447596049bbf294.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

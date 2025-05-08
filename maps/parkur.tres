@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="R_GameMap" load_steps=3 format=3 uid="uid://dae0hay5b1oi"]
+
+[ext_resource type="Script" uid="uid://dr6n65i48b73y" path="res://scripts/resources/R_GameMap.gd" id="1_j375i"]
+[ext_resource type="Texture2D" uid="uid://bs27b38iwrjuf" path="res://icon.svg" id="1_ue86v"]
+
+[resource]
+script = ExtResource("1_j375i")
+scene_path = "uid://d04u06dabrwc7"
+code = "parkur"
+name = "PARKUR"
+icon = ExtResource("1_ue86v")
+description = "PARKUR! ZOMVI"
+metadata/_custom_type_script = "uid://dr6n65i48b73y"

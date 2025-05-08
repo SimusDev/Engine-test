@@ -42,7 +42,7 @@ func _ready() -> void:
 		set_multiplayer_authority(multiplayer.get_unique_id())
 	
 	if sync_at_start:
-		sync()
+		sync(true)
 
 func _process(delta: float) -> void:
 	if send_mode == 0:
@@ -69,14 +69,14 @@ const INTERPOLATING_TYPES = [
 	TYPE_TRANSFORM2D,
 	TYPE_TRANSFORM3D,
 ]
-func update_properties_from_synced_data(delta: float = 0.0, synced_data: Dictionary = _synced_data) -> void:
+func update_properties_from_synced_data(delta: float = 0.0, synced_data: Dictionary = _synced_data, sync_instantly: bool = false) -> void:
 	_synced_data = synced_data
 	for property in _synced_data:
 		var value: Variant = _synced_data[property]
 		if not properties_to_sync.has(property):
 			continue
 		
-		if (interpolation) and INTERPOLATING_TYPES.has(typeof(value)):
+		if (interpolation) and INTERPOLATING_TYPES.has(typeof(value)) and not sync_instantly:
 			var lerp_speed: float = interpolation_speed * delta
 			
 			var actual_value: Variant = sync_node.get(property)
@@ -97,11 +97,11 @@ func _tick(delta: float) -> void:
 		sync()
 		_current_interval = 0
 
-func sync() -> void:
+func sync(instantly: bool = false) -> void:
 	if (not sync_node):
 		return
 	
-	_try_synchronize()
+	_try_synchronize(instantly)
 
 
 func create_new_synced_data() -> Dictionary[String, Variant]:
@@ -117,36 +117,36 @@ func create_new_client_data() -> Dictionary[String, Variant]:
 	#_data["path"] = get_path()
 	return _data
 
-func _try_synchronize() -> void:
+func _try_synchronize(instantly: bool = false) -> void:
 	var data: Dictionary = create_new_synced_data()
 	if _authority_node:
 		
-		_sync_rpc.rpc(_authority_node.get_multiplayer_authority(), data)
+		_sync_rpc.rpc(_authority_node.get_multiplayer_authority(), data, instantly)
 		
 		return
 	
 	data["path"] = get_path()
-	_address_to_server(data)
+	_address_to_server(data, instantly)
 
-func _address_to_server(data: Dictionary) -> void:
+func _address_to_server(data: Dictionary, instantly: bool = false) -> void:
 	if multiplayer.is_server():
 		return
 	
-	_send_data_to_server.rpc_id(1, data)
+	_send_data_to_server.rpc_id(1, data, instantly)
 
 @rpc("any_peer")
-func _send_data_to_server(data: Dictionary) -> void:
+func _send_data_to_server(data: Dictionary, instantly: bool = false) -> void:
 	var synchronizer: SD_MultiplayerSynchronizer = get_node_or_null(data["path"])
 	if synchronizer:
 		var server_data: Dictionary = synchronizer.create_new_synced_data()
-		_synchronize_without_authority_node.rpc(server_data)
+		_synchronize_without_authority_node.rpc(server_data, instantly)
 	
 @rpc("any_peer")
-func _synchronize_without_authority_node(data: Dictionary) -> void:
-	update_properties_from_synced_data(0.0, data)
+func _synchronize_without_authority_node(data: Dictionary, instantly: bool = false) -> void:
+	update_properties_from_synced_data(0.0, data, instantly)
 
 @rpc("any_peer")
-func _sync_rpc(peer_id: int, data: Dictionary) -> void:
+func _sync_rpc(peer_id: int, data: Dictionary, instantly: bool = false) -> void:
 	if is_multiplayer_authority():
 		return
 	

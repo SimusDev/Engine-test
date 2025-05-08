@@ -26,12 +26,12 @@ func get_current_map() -> R_GameMap:
 	return _current_map
 
 func change_map_to(map: R_GameMap) -> void:
-	_change_map_for_all_players(map)
-
-#@rpc("any_peer", "call_local", "reliable")
-func _change_map_for_all_players(map: R_GameMap) -> void:
 	_current_map = map
+	SyncedData.set_data_value("current_map_code", map.code)
 	SceneChanger.queue_change_scene_with_base_path("loading_map", false)
+
+func get_current_server_map_code() -> String:
+	return SyncedData.get_data_value("current_map_code", "")
 
 func get_map_by_code(code: String) -> R_GameMap:
 	for map in get_map_list():
