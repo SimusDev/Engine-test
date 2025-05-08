@@ -26,9 +26,6 @@ func _on_update() -> void:
 	
 
 func _input(event: InputEvent) -> void:
-	pass
-
-func _on_sd_node_input_on_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var key_string: String = event.as_text_key_label().to_lower()
 		if event.is_pressed():
@@ -49,6 +46,9 @@ func _on_sd_node_input_on_input(event: InputEvent) -> void:
 						line_edit.grab_click_focus()
 						
 
+
+func _on_sd_node_input_on_input(event: InputEvent) -> void:
+	pass
 
 func _on_draw() -> void:
 	await get_tree().create_timer(0.1, true, true).timeout

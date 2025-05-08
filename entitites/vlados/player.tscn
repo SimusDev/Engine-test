@@ -147,7 +147,7 @@ _data = {
 &"walk": SubResource("Animation_s5ho2")
 }
 
-[node name="vlados" type="CharacterBody3D" node_paths=PackedStringArray("camera_controller", "movement_controller", "character_component", "health_component", "head", "_animation_player", "_character_sync")]
+[node name="vlados" type="CharacterBody3D" node_paths=PackedStringArray("camera_controller", "movement_controller", "character_component", "health_component", "head", "_animation_player", "_character_sync") groups=["player"]]
 collision_layer = 0
 script = ExtResource("1_v4rts")
 camera_controller = NodePath("W_FPControllerCamera")

@@ -20,12 +20,12 @@ func explode() -> void:
 		_explode_rpc.rpc()
 
 
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "call_local")
 func _explode_rpc() -> void:
 	$C_HurtboxComponent.hurt_overlapping_hitboxes()
 	$C_DestroyComponent.destroy()
 
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "call_local")
 func _tick_rpc() -> void:
 	TICKS -= 1
 	$AudioStreamPlayer3D.play()

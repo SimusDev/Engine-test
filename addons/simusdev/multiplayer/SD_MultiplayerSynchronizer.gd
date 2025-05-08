@@ -134,18 +134,18 @@ func _address_to_server(data: Dictionary) -> void:
 	
 	_send_data_to_server.rpc_id(1, data)
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer")
 func _send_data_to_server(data: Dictionary) -> void:
 	var synchronizer: SD_MultiplayerSynchronizer = get_node_or_null(data["path"])
 	if synchronizer:
 		var server_data: Dictionary = synchronizer.create_new_synced_data()
 		_synchronize_without_authority_node.rpc(server_data)
 	
-@rpc("any_peer", "reliable")
+@rpc("any_peer")
 func _synchronize_without_authority_node(data: Dictionary) -> void:
 	update_properties_from_synced_data(0.0, data)
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer")
 func _sync_rpc(peer_id: int, data: Dictionary) -> void:
 	if is_multiplayer_authority():
 		return

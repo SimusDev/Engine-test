@@ -22,6 +22,8 @@ signal player_disconnected(player: SD_MultiplayerPlayer)
 
 signal server_disconnected()
 
+signal data_from_peer_recieved(data: SD_MPRecievedDBData)
+
 const HOST_ID: int = 1
 
 var _is_server_created: bool = false
@@ -34,7 +36,20 @@ var _username: String = "user"
 
 var _is_connected_to_server: bool = false
 
+var _database: Dictionary[String, Variant] = {}
+
+static var _instance: SD_MultiplayerSingleton = null
+
+static func get_instance() -> SD_MultiplayerSingleton:
+	return _instance
+
+func _exit_tree() -> void:
+	_instance = null
+
 func _ready() -> void:
+	if _instance == null:
+		_instance = self
+	
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
@@ -218,3 +233,63 @@ func _on_peer_disconnected(id: int) -> void:
 	console.write_from_object(self, "peer %s disconnected!" % [str(id)], SD_ConsoleCategories.CATEGORY.WARNING)
 	
 	_delete_player(id)
+
+func get_database() -> Dictionary[String, Variant]:
+	return _database
+
+func set_database_value(key: String, value: Variant) -> void:
+	_database[key] = value
+
+func get_database_value(key: String, default_value: Variant = null) -> Variant:
+	return _database.get(key, default_value)
+
+func has_database_key(key: String) -> bool:
+	return _database.has(key)
+
+func request_data_from_db(from_peer: int, callable: Callable, key: String, default_value: Variant = null) -> void:
+	var request_data: Dictionary = {
+		"from_peer": from_peer,
+		"object_id": callable.get_object().get_instance_id(),
+		"callable": callable.get_method(),
+		"key": key,
+		"default_value": default_value,
+	}
+	_request_data_from_db_rpc.rpc_id(from_peer, request_data)
+
+func request_data_from_server_db(callable: Callable, key: String, default_value: Variant) -> void:
+	request_data_from_db(HOST_ID, callable, key, default_value)
+
+@rpc("any_peer", "reliable")
+func _request_data_from_db_rpc(request_data: Dictionary) -> void:
+	var requester_id: int = multiplayer.get_remote_sender_id()
+	var key: String = request_data.get("key", "")
+	var default_value = request_data.get("default_value", "")
+	var requested_value: Variant = _database.get(key, default_value)
+	
+	var recieve_data: Dictionary = {
+		"key": key,
+		"value": requested_value,
+		"object_id": request_data["object_id"],
+		"callable": request_data["callable"],
+	}
+	_recieve_data_from_db_rpc.rpc_id(requester_id, recieve_data)
+
+@rpc("any_peer", "reliable")
+func _recieve_data_from_db_rpc(data: Dictionary) -> void:
+	var from_peer: int = multiplayer.get_remote_sender_id()
+	
+	var db_data: SD_MPRecievedDBData = SD_MPRecievedDBData.new()
+	db_data._peer_id = from_peer
+	db_data._key = data.get("key", "")
+	db_data._value = data.get("value", null)
+	data_from_peer_recieved.emit(db_data)
+	
+	var method_name: String = data.get("callable", "")
+	var object_id: int = data.get("object_id")
+	var object: Object = instance_from_id(object_id)
+	if is_instance_valid(object):
+		var callable: Callable = Callable(object, method_name)
+		if callable:
+			callable.call(db_data)
+
+	

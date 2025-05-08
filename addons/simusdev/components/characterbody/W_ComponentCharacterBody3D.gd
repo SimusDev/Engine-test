@@ -5,7 +5,7 @@ class_name W_ComponentCharacterBody3D
 
 @export var enabled: bool = true
 
-@export var gravity: float = 15.0
+@export var gravity: float = 980
 @export var jump_force: float = 6.0
 @export var move_acceleration: float = 16.0
 
@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	_body_physics_process(delta)
 
 func _body_physics_process(delta: float) -> void:
-	body.velocity.y -= gravity * delta
+	body.velocity.y -= gravity * (delta ** 2)
 	
 	var current_speed: float = move_speed
 	if is_sprinting:

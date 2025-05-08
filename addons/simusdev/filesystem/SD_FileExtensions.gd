@@ -43,7 +43,9 @@ const EXTENSIONS_CODES := {
 }
 
 const EXTENSIONS_CODES_IMPORT := {
-	
+	EC_SCENE : ".remap",
+	EC_SCRIPT : ".remap",
+	EC_RESOURCE : ".remap",
 }
 
 
@@ -80,7 +82,7 @@ static func has_extension_in_extension_code(extension: String, extension_code: S
 
 static func remove_import_prefix_from_path(path: String, extension_code: String) -> String:
 	if is_path_ends_with_import_prefix(path, extension_code):
-		return path.replace(P_IMPORT_DEFAULT, "")
+		return path.replace(get_extension_code_import_prefix(extension_code), "")
 	return path
 
 static func remove_extension_from_path(path: String) -> String:

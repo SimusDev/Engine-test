@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4kkhkjrd0ek5"]
+[gd_scene load_steps=10 format=3 uid="uid://b4kkhkjrd0ek5"]
 
 [ext_resource type="Texture2D" uid="uid://deuogt1h1bof8" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_urvl1"]
 [ext_resource type="PackedScene" uid="uid://doapi15bhvboh" path="res://prefabs/player_spawner.tscn" id="3_c3pkw"]
+[ext_resource type="PackedScene" uid="uid://4wdkon3b8vlh" path="res://entitites/zonbi/zonbi.tscn" id="4_5j8c4"]
 [ext_resource type="PackedScene" uid="uid://doxlh5c0gc0eo" path="res://entitites/explosive/explosive.tscn" id="4_dprsy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c3pkw"]
@@ -46,3 +47,6 @@ spawn_path = NodePath("..")
 
 [node name="Explosive" parent="." instance=ExtResource("4_dprsy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00413, -2.98052)
+
+[node name="Zonbi" parent="." instance=ExtResource("4_5j8c4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.80012, 6.05244)

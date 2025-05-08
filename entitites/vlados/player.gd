@@ -14,20 +14,27 @@ class_name WorldPlayer
 
 static var instance: WorldPlayer = null
 
+static var _players: Array[WorldPlayer] = []
+
 var _multiplayer_player: SD_MultiplayerPlayer
 
 func get_multiplayer_player() -> SD_MultiplayerPlayer:
 	return _multiplayer_player
 
+static func get_player_list() -> Array[WorldPlayer]:
+	return _players
+
 func _exit_tree() -> void:
 	if is_multiplayer_authority():
 		instance = null
 	
+	_players.erase(self)
 	EventBus.on_player_despawned.emit(self)
 
 func _ready() -> void:
 	if is_multiplayer_authority():
 		instance = self
+	_players.append(self)
 	
 	camera_controller.enabled = is_multiplayer_authority()
 	character_component.enabled = is_multiplayer_authority()
