@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b4kkhkjrd0ek5"]
+[gd_scene load_steps=16 format=3 uid="uid://b4kkhkjrd0ek5"]
 
 [ext_resource type="Script" uid="uid://b1vokxbnym51d" path="res://maps/scenes/test_map.gd" id="1_eynqh"]
 [ext_resource type="Texture2D" uid="uid://deuogt1h1bof8" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_urvl1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dwj121h1bful8" path="res://addons/simusdev/multiplayer/SD_MultiplayerSpawner.gd" id="4_5j8c4"]
 [ext_resource type="PackedScene" uid="uid://doxlh5c0gc0eo" path="res://entitites/explosive/explosive.tscn" id="4_dprsy"]
 [ext_resource type="Script" uid="uid://di5q8q4ybqbh6" path="res://scripts/components/hurtbox/C_HurtboxComponent.gd" id="6_guhaj"]
+[ext_resource type="PackedScene" uid="uid://b43e05qfmc4r3" path="res://entitites/test_rigidbody.tscn" id="7_guhaj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c3pkw"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -75,3 +76,15 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="C_HurtboxComponent"]
 shape = SubResource("ConvexPolygonShape3D_3gtaa")
+
+[node name="TestRigidbody" parent="." instance=ExtResource("7_guhaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.42269, 2.98965, 0)
+
+[node name="TestRigidbody2" parent="." instance=ExtResource("7_guhaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.42269, 2.98965, 3.05409)
+
+[node name="TestRigidbody3" parent="." instance=ExtResource("7_guhaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.42269, 2.98965, 5.89537)
+
+[node name="TestRigidbody4" parent="." instance=ExtResource("7_guhaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.42269, 2.98965, 8.35126)

@@ -31,10 +31,19 @@ func _exit_tree() -> void:
 	_players.erase(self)
 	EventBus.on_player_despawned.emit(self)
 
+func _enter_tree() -> void:
+	if _multiplayer_player == null:
+		var id: int = get_multiplayer_authority()
+		if !multiplayer.is_server():
+			print(id)
+		_multiplayer_player = Multiplayer.get_player_by_peer_id(id)
+
 func _ready() -> void:
 	if is_multiplayer_authority():
 		instance = self
 	_players.append(self)
+	
+	
 	
 	camera_controller.enabled = is_multiplayer_authority()
 	character_component.enabled = is_multiplayer_authority()

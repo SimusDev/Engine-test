@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3iqv6ckeak6u"]
+
+[ext_resource type="Script" uid="uid://6qv0ld4kqr0w" path="res://Games/counter-strike/entities/CS_BaseBody.gd" id="1_0cuxd"]
+
+[node name="CS_BaseBody" type="CharacterBody3D"]
+script = ExtResource("1_0cuxd")

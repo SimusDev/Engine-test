@@ -54,7 +54,7 @@ func _ready() -> void:
 	
 	callables = SD_MPSyncedCallables.new()
 	add_child(callables)
-	callables.name = callables.name.validate_node_name()
+	callables.name = "sc"
 	
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
@@ -121,27 +121,29 @@ func _server_create_player_for_client(peer: int, data: Dictionary) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func _create_player(data: Dictionary) -> void:
-	
 	var peer_id: int = data.get("peer_id", -1)
 	if peer_id == -1:
 		return
 	
 	var player: SD_MultiplayerPlayer = SD_MultiplayerPlayer.new()
-	player._username = data.get("username", "")
-	player._is_host = data.get("host", false)
-	player._peer_id = peer_id
+	var username: String =  data.get("username", "")
+	player.initialize(self, peer_id, username)
 	
 	_players.append(player)
-	player.initialize(self)
 	player_connected.emit(player)
+	
+	console.write_from_object(self, "(id: %s) %s connected!" % [peer_id, username], SD_ConsoleCategories.CATEGORY.SUCCESS)
 
 @rpc("any_peer", "call_local", "reliable")
 func _delete_player(peer_id: int) -> void:
 	var player: SD_MultiplayerPlayer = get_player_by_peer_id(peer_id)
+	var username: String = player.get_username()
 	if player:
 		_players.erase(player)
 		player.deinitialize()
 		player_disconnected.emit(player)
+		
+		console.write_from_object(self, "(id: %s) %s disconnected!" % [peer_id, username], SD_ConsoleCategories.CATEGORY.ERROR)
 
 func get_player_by_peer_id(id: int) -> SD_MultiplayerPlayer:
 	for player in _players:
@@ -187,6 +189,7 @@ func create_server(port: int) -> void:
 		
 		set_multiplayer_authority(_peer.get_unique_id())
 		
+		_is_server_created = true
 		server_created.emit(port)
 		
 		console.write_from_object(self, "SERVER created with port: %s" % [str(port)], SD_ConsoleCategories.CATEGORY.WARNING)
@@ -203,6 +206,9 @@ func create_server(port: int) -> void:
 		_create_player(data)
 
 func create_client(address: String, port: int) -> void:
+	if _is_server_created or _is_connected_to_server:
+		return
+	
 	var err = _peer.create_client(address, port)
 	if err == OK:
 		multiplayer.multiplayer_peer = _peer
@@ -231,12 +237,12 @@ func is_dedicated_server() -> bool:
 
 func _on_peer_connected(id: int) -> void:
 	peer_connected.emit(id)
-	console.write_from_object(self, "peer %s connected!" % [str(id)], SD_ConsoleCategories.CATEGORY.WARNING)
+	#console.write_from_object(self, "peer %s connected!" % [str(id)], SD_ConsoleCategories.CATEGORY.WARNING)
 	
 
 func _on_peer_disconnected(id: int) -> void:
 	peer_disconnected.emit(id)
-	console.write_from_object(self, "peer %s disconnected!" % [str(id)], SD_ConsoleCategories.CATEGORY.WARNING)
+	#console.write_from_object(self, "peer %s disconnected!" % [str(id)], SD_ConsoleCategories.CATEGORY.WARNING)
 	
 	_delete_player(id)
 
@@ -252,7 +258,7 @@ func get_database_value(key: String, default_value: Variant = null) -> Variant:
 func has_database_key(key: String) -> bool:
 	return _database.has(key)
 
-func request_data_from_db(from_peer: int, callable: Callable, key: String, default_value: Variant = null) -> void:
+func request_data_from_peer_db(from_peer: int, callable: Callable, key: String, default_value: Variant = null) -> void:
 	var request_data: Dictionary = {
 		"from_peer": from_peer,
 		"object_id": callable.get_object().get_instance_id(),
@@ -263,7 +269,7 @@ func request_data_from_db(from_peer: int, callable: Callable, key: String, defau
 	_request_data_from_db_rpc.rpc_id(from_peer, request_data)
 
 func request_data_from_server_db(callable: Callable, key: String, default_value: Variant) -> void:
-	request_data_from_db(HOST_ID, callable, key, default_value)
+	request_data_from_peer_db(HOST_ID, callable, key, default_value)
 
 @rpc("any_peer", "reliable")
 func _request_data_from_db_rpc(request_data: Dictionary) -> void:

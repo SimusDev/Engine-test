@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct8dv5yb0qsnr"]
+
+[ext_resource type="Script" uid="uid://b5wom6ohoa8x6" path="res://Games/counter-strike/components/skin/CS_Skin.gd" id="1_1ttce"]
+[ext_resource type="PackedScene" uid="uid://bv8vf5g0sgslb" path="res://Games/counter-strike/models/players/ct_urban/inherited.tscn" id="2_1fi4u"]
+[ext_resource type="AnimationLibrary" uid="uid://dq6el2xlygd6n" path="res://Games/counter-strike/animations/base/animation.res" id="3_i6fkr"]
+
+[node name="CS_Skin" type="Node3D"]
+script = ExtResource("1_1ttce")
+
+[node name="root" type="Node3D" parent="."]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+
+[node name="inherited" parent="root" instance=ExtResource("2_1fi4u")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../root/inherited")
+libraries = {
+&"animation": ExtResource("3_i6fkr")
+}

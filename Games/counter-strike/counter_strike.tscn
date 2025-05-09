@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dinoshagmu1i7"]
+
+[ext_resource type="Script" uid="uid://c4hvsrn5mrb54" path="res://Games/counter-strike/counter_strike.gd" id="1_urf0d"]
+[ext_resource type="PackedScene" uid="uid://dsh76ld230ke5" path="res://Games/counter-strike/maps/de_dust2/map.tscn" id="2_oknjs"]
+
+[node name="counter-strike" type="Node"]
+script = ExtResource("1_urf0d")
+
+[node name="Map" parent="." instance=ExtResource("2_oknjs")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.692803, 0.0225961, 0.720773, 0, 0.999509, -0.0313344, -0.721127, 0.0217086, 0.692463, 42.2835, 2.17172, -49.7888)
+fov = 51.4
