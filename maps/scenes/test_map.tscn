@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://b4kkhkjrd0ek5"]
+[gd_scene load_steps=15 format=3 uid="uid://b4kkhkjrd0ek5"]
 
+[ext_resource type="Script" uid="uid://b1vokxbnym51d" path="res://maps/scenes/test_map.gd" id="1_eynqh"]
 [ext_resource type="Texture2D" uid="uid://deuogt1h1bof8" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_urvl1"]
 [ext_resource type="PackedScene" uid="uid://doapi15bhvboh" path="res://prefabs/player_spawner.tscn" id="3_c3pkw"]
 [ext_resource type="Script" uid="uid://dwj121h1bful8" path="res://addons/simusdev/multiplayer/SD_MultiplayerSpawner.gd" id="4_5j8c4"]
 [ext_resource type="PackedScene" uid="uid://doxlh5c0gc0eo" path="res://entitites/explosive/explosive.tscn" id="4_dprsy"]
-[ext_resource type="Script" uid="uid://x8rihyq34j2a" path="res://scripts/components/spawner/C_NodeSpawnerComponent.gd" id="5_eynqh"]
-[ext_resource type="PackedScene" uid="uid://b43e05qfmc4r3" path="res://entitites/test_rigidbody.tscn" id="6_guhaj"]
+[ext_resource type="Script" uid="uid://di5q8q4ybqbh6" path="res://scripts/components/hurtbox/C_HurtboxComponent.gd" id="6_guhaj"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c3pkw"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -27,47 +27,17 @@ uv1_triplanar = true
 material = SubResource("StandardMaterial3D_ers5l")
 size = Vector3(25, 1, 26)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_t0ucc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t0ucc"]
 
-[sub_resource type="Animation" id="Animation_w3udq"]
-resource_name = "idle"
-length = 10.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("spawner:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(-15, 13.155, 0), Vector3(15, 13.155, 0)]
-}
+[sub_resource type="BoxMesh" id="BoxMesh_w3udq"]
+material = SubResource("StandardMaterial3D_t0ucc")
+size = Vector3(5, 1, 1)
 
-[sub_resource type="Animation" id="Animation_3gtaa"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("spawner:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 13.1553, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_km7o5"]
-_data = {
-&"RESET": SubResource("Animation_3gtaa"),
-&"idle": SubResource("Animation_w3udq")
-}
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3gtaa"]
+points = PackedVector3Array(2.5, 0.5, 0.5, 2.5, 0.5, -0.5, -2.5, 0.5, 0.5, 2.5, -0.5, 0.5, 2.5, -0.5, -0.5, -2.5, 0.5, -0.5, -2.5, -0.5, 0.5, -2.5, -0.5, -0.5)
 
 [node name="map" type="Node3D"]
+script = ExtResource("1_eynqh")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p5exx")
@@ -92,22 +62,16 @@ script = ExtResource("4_5j8c4")
 root = NodePath("..")
 metadata/_custom_type_script = "uid://dwj121h1bful8"
 
-[node name="spawner" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.1553, 0)
-visible = false
-mesh = SubResource("CylinderMesh_t0ucc")
+[node name="C_HurtboxComponent" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11061, 6.01209)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("6_guhaj")
+metadata/_custom_type_script = "uid://di5q8q4ybqbh6"
 
-[node name="C_NodeSpawnerComponent" type="Node" parent="spawner" node_paths=PackedStringArray("spawn_parent", "spawn_pos")]
-script = ExtResource("5_eynqh")
-spawn_parent = NodePath("../..")
-spawn_pos = NodePath("..")
-spawn_scene = ExtResource("6_guhaj")
-_spawn_every = 2.0
-metadata/_custom_type_script = "uid://x8rihyq34j2a"
+[node name="MeshInstance3D" type="MeshInstance3D" parent="C_HurtboxComponent"]
+mesh = SubResource("BoxMesh_w3udq")
+skeleton = NodePath("")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="spawner"]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_km7o5")
-}
-autoplay = "idle"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="C_HurtboxComponent"]
+shape = SubResource("ConvexPolygonShape3D_3gtaa")

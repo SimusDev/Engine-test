@@ -10,7 +10,6 @@ func _ready() -> void:
 	if Multiplayer.is_client():
 		monitoring = false
 		monitorable = false
-		hide()
 		set_process(false)
 		set_physics_process(false)
 		set_physics_process_internal(false)
@@ -21,7 +20,7 @@ func _ready() -> void:
 	area_exited.connect(_on_area_exited_)
 
 func hurt(hitbox: C_HitboxComponent) -> void:
-	hitbox.apply_damage(points * multiplier)
+	Multiplayer.callables.node_sync_call(hitbox, "apply_damage", [points * multiplier])
 
 func hurt_overlapping_hitboxes() -> void:
 	for hitbox in get_overlapping_hitboxes():

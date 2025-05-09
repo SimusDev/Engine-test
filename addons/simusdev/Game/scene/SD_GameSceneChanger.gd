@@ -36,7 +36,6 @@ func queue_remove_scene(scene: PackedScene) -> void:
 	_queue.erase(scene)
 
 func queue_change_scene_to_packed(scene: PackedScene, use_transition: bool = not disable_transition) -> void:
-	
 	queue_add_scene(scene)
 	
 	if not use_transition:

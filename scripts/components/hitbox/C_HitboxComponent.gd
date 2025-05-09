@@ -16,7 +16,4 @@ func _ready() -> void:
 
 
 func apply_damage(points: float) -> void:
-	if Multiplayer.is_client():
-		return
-	
 	health.apply_damage(points * damage_multiplier)

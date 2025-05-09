@@ -38,6 +38,8 @@ var _is_connected_to_server: bool = false
 
 var _database: Dictionary[String, Variant] = {}
 
+var callables: SD_MPSyncedCallables
+
 static var _instance: SD_MultiplayerSingleton = null
 
 static func get_instance() -> SD_MultiplayerSingleton:
@@ -49,6 +51,10 @@ func _exit_tree() -> void:
 func _ready() -> void:
 	if _instance == null:
 		_instance = self
+	
+	callables = SD_MPSyncedCallables.new()
+	add_child(callables)
+	callables.name = callables.name.validate_node_name()
 	
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)

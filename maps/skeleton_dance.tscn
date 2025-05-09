@@ -1,0 +1,166 @@
+[gd_scene load_steps=20 format=3 uid="uid://k7qeywqfvxfx"]
+
+[ext_resource type="Script" uid="uid://dwj121h1bful8" path="res://addons/simusdev/multiplayer/SD_MultiplayerSpawner.gd" id="3_ck5c6"]
+[ext_resource type="PackedScene" uid="uid://doapi15bhvboh" path="res://prefabs/player_spawner.tscn" id="4_wmxmj"]
+[ext_resource type="PackedScene" uid="uid://xa7ihoc3qtp0" path="res://maps/vlados_spooky_scary_skeleton/3d_objects/skeleton/spooky_scary_skeleton.tscn" id="5_wmxmj"]
+[ext_resource type="PackedScene" uid="uid://2eu4rf38wq0m" path="res://maps/vlados_spooky_scary_skeleton/3d_objects/skeleton/skeleton_walk.tscn" id="6_2bgam"]
+[ext_resource type="Script" uid="uid://bmyn408f0t62g" path="res://maps/vlados_spooky_scary_skeleton/path_3d.gd" id="6_b4tl5"]
+[ext_resource type="AudioStream" uid="uid://cq56s65lj5agm" path="res://maps/vlados_spooky_scary_skeleton/spooky-scary-skeleton_WnTSX24.wav" id="8_a5xlq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ck5c6"]
+sky_top_color = Color(0.25545, 0.170718, 0.1489, 1)
+sky_horizon_color = Color(0.390947, 0.227969, 0.193266, 1)
+
+[sub_resource type="Sky" id="Sky_wmxmj"]
+sky_material = SubResource("ProceduralSkyMaterial_ck5c6")
+
+[sub_resource type="Environment" id="Environment_2bgam"]
+background_mode = 2
+sky = SubResource("Sky_wmxmj")
+ambient_light_sky_contribution = 0.0
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_cascades = 8
+sdfgi_y_scale = 2
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_b4tl5"]
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_a5xlq"]
+material = SubResource("ORMMaterial3D_b4tl5")
+size = Vector3(20, 2, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7v7k"]
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_wq3ic"]
+material = SubResource("StandardMaterial3D_x7v7k")
+size = Vector3(1, 8, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ck5c6"]
+points = PackedVector3Array(-0.5, -4, -10, 0.5, -4, -10, -0.5, -4, 10, -0.5, 4, -10, 0.5, 4, -10, 0.5, -4, 10, -0.5, 4, 10, 0.5, 4, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wmxmj"]
+points = PackedVector3Array(-0.5, -4, -10, 0.5, -4, -10, -0.5, -4, 10, -0.5, 4, -10, 0.5, 4, -10, 0.5, -4, 10, -0.5, 4, 10, 0.5, 4, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2bgam"]
+points = PackedVector3Array(-0.5, -4, -10, 0.5, -4, -10, -0.5, -4, 10, -0.5, 4, -10, 0.5, 4, -10, 0.5, -4, 10, -0.5, 4, 10, 0.5, 4, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_b4tl5"]
+points = PackedVector3Array(-0.5, -4, -10, 0.5, -4, -10, -0.5, -4, 10, -0.5, 4, -10, 0.5, 4, -10, 0.5, -4, 10, -0.5, 4, 10, 0.5, 4, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_a5xlq"]
+points = PackedVector3Array(-10, -1, -10, -10, 1, -10, 10, -1, -10, -10, -1, 10, -10, 1, 10, 10, 1, -10, 10, -1, 10, 10, 1, 10)
+
+[sub_resource type="Curve3D" id="Curve3D_a5xlq"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -5.27422, 1.00136e-05, 9.10232, 0, 0, 0, 0, 0, 0, 4.99771, 1.00136e-05, 8.79684, 0, 0, 0, 0, 0, 0, 8.51078, 1.00136e-05, 6.5057, 0, 0, 0, 0, 0, 0, 8.70171, 1.00136e-05, -6.51558, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, 4.42492, 1.00136e-05, -9.30313, 0, 0, 0, 0, 0, 0, -5.0451, 1.00136e-05, -9.22676, 0, 0, 0, 0, 0, 0, -8.78729, 1.00136e-05, -5.02634, 0, 0, 0, 0, 0, 0, -8.86366, 1.00136e-05, 7.19304),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 48
+
+[node name="skeleton_dance" type="Node3D"]
+
+[node name="env" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2bgam")
+
+[node name="sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.642788, 0.383022, -0.663414, 0, 0.866025, 0.5, 0.766044, -0.321394, 0.55667, 0, 0, 0)
+shadow_enabled = true
+
+[node name="building" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_a5xlq")
+
+[node name="wall1" type="MeshInstance3D" parent="building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 4.8, 0)
+mesh = SubResource("BoxMesh_wq3ic")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="building/wall1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="building/wall1/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_ck5c6")
+debug_fill = false
+
+[node name="wall2" type="MeshInstance3D" parent="building"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 4.8, 0)
+mesh = SubResource("BoxMesh_wq3ic")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="building/wall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="building/wall2/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_wmxmj")
+debug_fill = false
+
+[node name="wall3" type="MeshInstance3D" parent="building"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.53674e-07, 4.8, -10.5)
+mesh = SubResource("BoxMesh_wq3ic")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="building/wall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="building/wall3/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_2bgam")
+debug_fill = false
+
+[node name="wall4" type="MeshInstance3D" parent="building"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 9.53674e-07, 4.8, 10.5)
+mesh = SubResource("BoxMesh_wq3ic")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="building/wall4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="building/wall4/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_b4tl5")
+debug_fill = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="building"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="building/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_a5xlq")
+debug_fill = false
+
+[node name="building2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.7, 0)
+mesh = SubResource("BoxMesh_a5xlq")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10.2, 0)
+light_color = Color(1, 1, 0, 1)
+light_energy = 9.081
+shadow_enabled = true
+shadow_normal_bias = 1.808
+spot_range = 14.1798
+
+[node name="SD_MultiplayerSpawner" type="Node" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("3_ck5c6")
+root = NodePath("..")
+metadata/_custom_type_script = "uid://dwj121h1bful8"
+
+[node name="PlayerSpawner" parent="." instance=ExtResource("4_wmxmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96481, 3.83882, 0)
+visible = true
+
+[node name="3d_objects" type="Node3D" parent="."]
+
+[node name="spooky_scary_skeleton" parent="3d_objects" instance=ExtResource("5_wmxmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01787, 0)
+
+[node name="Path3D" type="Path3D" parent="3d_objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.001, 0)
+curve = SubResource("Curve3D_a5xlq")
+script = ExtResource("6_b4tl5")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="3d_objects/Path3D"]
+transform = Transform3D(0.0297259, 0, -0.999551, 0, 0.999996, 0, 0.999551, 0, 0.0297259, -5.27422, 1.00136e-05, 9.10232)
+rotation_mode = 1
+
+[node name="skeleton_walk" parent="3d_objects/Path3D/PathFollow3D" instance=ExtResource("6_2bgam")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="music" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_a5xlq")
+volume_db = -20.0
+unit_size = 64.72
+autoplay = true
+max_distance = 78.02

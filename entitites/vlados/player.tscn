@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://clhksblif0fu3"]
+[gd_scene load_steps=28 format=3 uid="uid://clhksblif0fu3"]
 
 [ext_resource type="Texture2D" uid="uid://bs27b38iwrjuf" path="res://icon.svg" id="1_cusn3"]
 [ext_resource type="Script" uid="uid://rc5ovev0rep5" path="res://entitites/vlados/player.gd" id="1_v4rts"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cvishs4j8htsj" path="res://addons/simusdev/multiplayer/SD_MultiplayerSynchronizer.gd" id="7_y0ih3"]
 [ext_resource type="Script" uid="uid://bhwbi1ykuh8e1" path="res://scripts/player/C_PlayerCamera.gd" id="9_lp3wq"]
 [ext_resource type="PackedScene" uid="uid://cyjf4da755tj" path="res://scripts/world/nickname.tscn" id="10_icxca"]
+[ext_resource type="Script" uid="uid://cmb5et352niyr" path="res://scripts/components/timer_server/C_TimerServer.gd" id="13_ldotg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_icxca"]
 size = Vector3(1, 2.45334, 1)
@@ -359,7 +360,14 @@ mesh = SubResource("SphereMesh_kcaod")
 transform = Transform3D(1, 0, 0, 0, 1, 5.96046e-08, 0, -5.96046e-08, 1, -0.0747953, -0.0429606, -0.0861225)
 mesh = SubResource("SphereMesh_kcaod")
 
+[node name="C_TimerServer" type="Timer" parent="."]
+autostart = true
+script = ExtResource("13_ldotg")
+metadata/_custom_type_script = "uid://cmb5et352niyr"
+
+[connection signal="health_changed" from="CHealthComponent" to="nickname" method="_on_c_health_component_health_changed"]
 [connection signal="data_created" from="PlayerSynchronizer/character_sync" to="PlayerSynchronizer" method="_on_character_sync_data_created"]
 [connection signal="mouse_motion" from="W_FPControllerCamera" to="." method="_on_w_fp_controller_camera_mouse_motion"]
+[connection signal="timeout" from="C_TimerServer" to="." method="_on_c_timer_server_timeout"]
 
 [editable path="W_FPControllerCamera"]

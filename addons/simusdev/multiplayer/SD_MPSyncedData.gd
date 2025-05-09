@@ -94,7 +94,7 @@ func _on_connected_to_server() -> void:
 	synchronize_all_data()
 
 func client_sync_data_from_server() -> void:
-	if is_initialized() or singleton.is_server():
+	if not is_initialized() or singleton.is_server():
 		return
 	
 	_client_sync_data_from_server_rpc.rpc_id(singleton.HOST_ID, get_path())
@@ -102,7 +102,7 @@ func client_sync_data_from_server() -> void:
 
 @rpc("any_peer", "reliable")
 func _client_sync_data_from_server_rpc(sync_client_path: NodePath) -> void:
-	if is_initialized():
+	if not is_initialized():
 		return
 	
 	var server_synchronizer: SD_MPSyncedData = get_node_or_null(sync_client_path)
@@ -110,7 +110,7 @@ func _client_sync_data_from_server_rpc(sync_client_path: NodePath) -> void:
 	if not server_synchronizer:
 		return
 	
-	var server_data: Dictionary[String, Variant] = server_synchronizer.get_data()
+	var server_data: Dictionary[String, Variant] = server_synchronizer.local_get_data()
 	
 	if singleton.is_server():
 		var client_id: int = multiplayer.get_remote_sender_id()

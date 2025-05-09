@@ -5,4 +5,6 @@ class_name MapSpawnerComponent
 
 func _ready() -> void:
 	var map: Node = Maps.get_current_map_scene().instantiate()
-	spawn_at.call_deferred("add_child", map)
+	if map:
+		spawn_at.call_deferred("add_child", map)
+		

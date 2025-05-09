@@ -1,7 +1,7 @@
 extends Timer
 class_name C_TimerServer
 
-func _enter_tree() -> void:
+func _ready() -> void:
 	if multiplayer.is_server():
 		return
 	

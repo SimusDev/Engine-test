@@ -88,16 +88,16 @@ func update_properties_from_synced_data(delta: float = 0.0, synced_data: Diction
 
 func _tick(delta: float) -> void:
 	if refresh_rate == 0:
-		sync()
+		sync(false)
 		return
 	
 	var send_interval: float = float(1.0) / float(refresh_rate)
 	_current_interval = move_toward(_current_interval, send_interval, delta)
 	if _current_interval >= send_interval:
-		sync()
+		sync(false)
 		_current_interval = 0
 
-func sync(instantly: bool = false) -> void:
+func sync(instantly: bool = true) -> void:
 	if (not sync_node):
 		return
 	

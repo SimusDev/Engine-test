@@ -12,7 +12,6 @@ signal health_changed()
 @export var health: float = 100.0 : set = set_health, get = get_health
 @export var max_health: float = 100.0 : set = set_max_health, get = get_max_health
 
-
 var _died: bool = false
 
 func kill() -> void:
@@ -20,6 +19,9 @@ func kill() -> void:
 
 func set_health(points: float) -> void:
 	if not enabled:
+		return
+	
+	if points == health:
 		return
 	
 	health = points

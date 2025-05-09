@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="R_GameMap" load_steps=3 format=3 uid="uid://caoyjmck6h266"]
+
+[ext_resource type="Texture2D" uid="uid://bs27b38iwrjuf" path="res://icon.svg" id="1_mpt6o"]
+[ext_resource type="Script" uid="uid://dr6n65i48b73y" path="res://scripts/resources/R_GameMap.gd" id="2_qjyd0"]
+
+[resource]
+script = ExtResource("2_qjyd0")
+scene_path = "uid://k7qeywqfvxfx"
+code = "skeleton_dance"
+name = "SKELETON DANCE"
+icon = ExtResource("1_mpt6o")
+description = ""
+metadata/_custom_type_script = "uid://dr6n65i48b73y"

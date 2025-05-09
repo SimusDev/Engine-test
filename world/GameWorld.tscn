@@ -1,11 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://dg4dsosimfgrn"]
 
 [ext_resource type="Script" uid="uid://cprsa3ecpfiow" path="res://world/GameWorld.gd" id="1_uvpr4"]
-[ext_resource type="Script" uid="uid://dwj121h1bful8" path="res://addons/simusdev/multiplayer/SD_MultiplayerSpawner.gd" id="2_3fgg8"]
+[ext_resource type="Script" uid="uid://5by2ms76p5wg" path="res://addons/simusdev/multiplayer/SD_MPClientPropertySynchronizer.gd" id="2_o8mtl"]
 [ext_resource type="Script" uid="uid://cg20f3igakhjf" path="res://scripts/map/MapSpawnerComponent.gd" id="2_xbm2x"]
 
 [node name="GameWorld" type="Node"]
 script = ExtResource("1_uvpr4")
+
+[node name="SD_MPPropertySynchronizer" type="Node" parent="."]
+script = ExtResource("2_o8mtl")
+metadata/_custom_type_script = "uid://5by2ms76p5wg"
 
 [node name="MapSpawnerComponent" type="Node" parent="." node_paths=PackedStringArray("spawn_at")]
 script = ExtResource("2_xbm2x")
@@ -13,9 +17,3 @@ spawn_at = NodePath(".")
 metadata/_custom_type_script = "uid://cg20f3igakhjf"
 
 [node name="Entities" type="Node" parent="."]
-
-[node name="SD_MultiplayerSpawner" type="Node" parent="Entities" node_paths=PackedStringArray("root")]
-script = ExtResource("2_3fgg8")
-DEBUG = true
-root = NodePath("..")
-metadata/_custom_type_script = "uid://dwj121h1bful8"
